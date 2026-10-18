@@ -67,18 +67,12 @@ def run_data_quality_checks():
         else:
             dq_logger.info(f"DQ PASSED: {check_name}")
             print(f"PASSED: {check_name}")
-
     print("=" * 50 + "\n")
     conn.close()
-
-    # THE ALARM: If any rows failed, raise an exception to kill the process loudly
     if total_failures > 0:
-        error_msg = f"PIPELINE ALARM: {total_failures} total rows violated business rules."
+        error_msg = f"PIPELINE ALARM: {total_failures} total rows violated rules."
         dq_logger.error(error_msg)
         raise ValueError(error_msg)
-
     dq_logger.info("Pipeline finished successfully with all DQ checks passed.")
-
-
 if __name__ == "__main__":
     run_data_quality_checks()
